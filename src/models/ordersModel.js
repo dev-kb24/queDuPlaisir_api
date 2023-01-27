@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
-import {OrdersSchema} from '../schémas/ordersSchema.js'
+import {OrdersSchema} from '../schemas/ordersSchema.js'
 
 export const ordersModel = mongoose.model('orders', OrdersSchema);
