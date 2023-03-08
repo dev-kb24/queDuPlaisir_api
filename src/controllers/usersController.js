@@ -1,3 +1,4 @@
+
 export const addUser = (User) => {
     return async (req,res) => {
         try {
