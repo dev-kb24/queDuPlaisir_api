@@ -1,16 +1,24 @@
-
+import { checkUser } from "../services/usersService.js";
 export const addUser = (User) => {
     return async (req,res) => {
-        try {
-            const user = new User({
-                username:req.body.username,
-                email:req.body.email,
-                password:req.body.password
-            })
-            const userSaved = await user.save();
-            res.status(201).json({success:true,data:userSaved});
-        } catch (err) {
-            res.status(400).json({success:false,error:err});
+        let data = {
+            username:req.body.username,
+            email:req.body.email,
+            password:req.body.password
+        }
+        const errors = await checkUser(data);
+        if(errors.length === 0){
+            try {
+                const user = new User({
+                    ...data
+                })
+                const userSaved = await user.save();
+                res.status(201).json({success:true,data:userSaved});
+            } catch (err) {
+                res.status(400).json({success:false,error:err});
+            }
+        }else{
+            res.status(400).json({success:false,error:errors});
         }
     }  
 }
